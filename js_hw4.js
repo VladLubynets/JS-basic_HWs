@@ -1,31 +1,85 @@
- //Напишіть функцію яка буде генерувати певну кількість випадкових чисел в діапазоні від 100 до 1000 включно. 
- // Порахувати кількість парних та непарних серед них. Обчислити відсоткове співвідношення - чи буде воно близьке до 50%50? 
- // Приклад функції checkProbabilityTheory(count). Парметр count буде вказувати скільки разів буде генеруватися випадкове число.
+/*Умови виконання ДЗ
 
-function checkProbabilityTheory(count) {
-  let evenCount = 0;
-  let oddCount = 0;
+Створити метод price(), який обчислює та повертає загальну вартість наданих послуг.
+Створити метод minPrice(), який повертає мінімальну ціну.
+Створити метод maxPrice(), який повертає максимальну ціну.*/
 
-  for (let i = 0; i < count; i++) {
-    let number = Math.floor(Math.random() * 901) + 100;
+var services = {
+"стрижка": "360 грн",
+"гоління": "80 грн",
+"Миття голови": "200 грн",
+"Манікюр": "880 грн",
 
-    console.log(number);
+};
+services["Розбити скло"] = "200 грн";
+services["Розбити чашку"] = "120 грн";
 
-    if (number % 2 === 0) {
-      evenCount++;
-    } else {
-      oddCount++;
+services.price = function () {
+  let totalPrice = 0;
+  let values = Object.values(this);
+
+  for (let i = 0; i < values.length; i++) {
+    let currentValue = values[i];
+    let currentType = typeof currentValue;
+
+    if (currentType !== "function") {
+      let currentPrice = parseInt(currentValue);
+
+      totalPrice = totalPrice + currentPrice;
     }
   }
 
-  let evenPercent = evenCount / count * 100;
-  let oddPercent = oddCount / count * 100;
+  return totalPrice;
+};
+console.log("Загальна ціна:", services.price());
 
-  console.log("парних:", evenCount);
-  console.log("непарних:", oddCount);
+services.minPrice = function () {
+  let minimumPrice = null;
+  let values = Object.values(this);
 
-  console.log("відсоток парних", evenPercent );
-  console.log("відсоток не парних:", oddPercent );
-}
+  for (let i = 0; i < values.length; i++) {
+    let currentValue = values[i];
+    let currentType = typeof currentValue;
 
-checkProbabilityTheory(100000);
+    if (currentType !== "function") {
+      let currentPrice = parseInt(currentValue);
+
+      if (minimumPrice === null) {
+        minimumPrice = currentPrice;
+      }
+
+      if (currentPrice < minimumPrice) {
+        minimumPrice = currentPrice;
+      }
+    }
+  }
+
+  return minimumPrice;
+};
+console.log("Мінімальна ціна:", services.minPrice());
+
+services.maxPrice = function () {
+  let maximumPrice = null;
+  let values = Object.values(this);
+
+  for (let i = 0; i < values.length; i++) {
+    let currentValue = values[i];
+    let currentType = typeof currentValue;
+
+    if (currentType !== "function") {
+      let currentPrice = parseInt(currentValue);
+
+      if (maximumPrice === null) {
+        maximumPrice = currentPrice;
+      }
+
+      if (currentPrice > maximumPrice) {
+        maximumPrice = currentPrice;
+      }
+    }
+  }
+
+  return maximumPrice;
+};
+
+console.log("Максимальна ціна:", services.maxPrice());
